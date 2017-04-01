@@ -1,0 +1,19 @@
+{
+  "name": "herald",
+  "version": "1.0.0",
+  "description": "Simple JS notifications",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pxlpotion/herald.git"
+  },
+  "author": "DaddyWarbucks | PxlPotion",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pxlpotion/herald/issues"
+  },
+  "homepage": "https://github.com/pxlpotion/herald#readme"
+}
