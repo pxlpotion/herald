@@ -73,7 +73,7 @@ const herald = {
 	},
 };
 
-export default herald;
+module.exports = herald;
 
 // The styles that are added to the <style> tag. Not needed in the actual "module"
 const styles = `
