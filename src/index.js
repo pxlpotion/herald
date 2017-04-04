@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 // Simple popup notifications.
 // Herald definition: an official messenger bringing news...nice!
