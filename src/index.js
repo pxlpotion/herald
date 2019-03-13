@@ -5,24 +5,21 @@
 // NOTE: this does not use jQuery, but does use some jQuery var naming conventions when storing DOM nodes.
 // NOTE: The markup is Bootstrap specific
 
-// TODO: The timeout close() function still fires even after the user has manually closed the alert
-// resulting in an err: `Uncaught DOMException: Failed to execute 'removeChild' on 'Node': The node to be removed is not a child of this node.` because the node has already been removed
-// Name setTimeout in 'this' so timeout can be cleared when user clicks x to close
-
 const herald = {
 	options: {
 		delay: 3000,
 		container_id: 'heraldContainer'
 	},
 	$container: null, // will be a DOM node
-	init: function() {
+	timeout: null,
+	init: function () {
 		// Create and append the div where notifications will be appended
 		const $container = document.createElement('div');
 		$container.setAttribute('id', this.options.container_id);
 		document.body.appendChild($container);
 		this.$container = $container;
 		// Create a click handler to close the notification
-		this.$container.addEventListener('click', function(e) {
+		this.$container.addEventListener('click', function (e) {
 			if (e.target.tagName.toLowerCase() === 'button') {
 				// Traverse up from the button to find the actual $notification that was added
 				const $notification = e.target.parentNode.parentNode; // grandparent
@@ -34,7 +31,7 @@ const herald = {
 		$createdStyleTag.textContent = styles; // defined globally outside herald methods, see bottom of file
 		document.body.appendChild($createdStyleTag);
 	},
-	notify: function(message, title, type) {
+	notify: function (message, title, type) {
 		if (this.$container === null) {
 			this.init();
 		}
@@ -51,24 +48,25 @@ const herald = {
 		this.$container.appendChild($notification);
 		this.delayedClose($notification);
 	},
-	close: function($notification) {
+	close: function ($notification) {
 		this.$container.removeChild($notification);
+		clearTimeout(this.timeout);
 	},
-	delayedClose: function($notification) {
-		setTimeout(function() {
+	delayedClose: function ($notification) {
+		this.timeout = setTimeout(function () {
 			this.close($notification);
 		}.bind(this), this.options.delay);
 	},
-	success: function(message, title = null) {
+	success: function (message, title = null) {
 		this.notify(message, title, 'success');
 	},
-	error: function(message, title = null) {
+	error: function (message, title = null) {
 		this.notify(message, title, 'danger');
 	},
-	warning: function(message, title = null) {
+	warning: function (message, title = null) {
 		this.notify(message, title, 'warning');
 	},
-	info: function(message, title = null) {
+	info: function (message, title = null) {
 		this.notify(message, title, 'info');
 	},
 };
